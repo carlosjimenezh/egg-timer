@@ -1,6 +1,8 @@
+import finished from './components/timeFinished'
+import timerDisplay from './components/timerDisplay';
+
 let timerInterval;
 export function setupTimers(elements) {
-  console.log(elements);
   elements.forEach((element) => {
     element.addEventListener("click", (e) => {
       const time = e.target.dataset.time;
@@ -14,14 +16,9 @@ export function setupTimers(elements) {
 function startTimer(duration) {
   let timerLeft = duration * 60;
   clearInterval(timerInterval);
-  const times = document.querySelector("#times");
-  if (times) {
-    times.innerHTML = `
-      <div>
-        <span id="timer-display">00:00</span>
-        <button id="timer-stop">stop</button>
-      </div>
-    `;
+  const display = document.querySelector("#display");
+  if (display) {
+    timerDisplay()
     updateDisplay(timerLeft);
     timerInterval = setInterval(() => {
       timerLeft--;
@@ -39,10 +36,18 @@ function updateDisplay(timerLeft) {
     const minutes = Math.floor(timerLeft / 60);
     const seconds = timerLeft % 60;
     timerDisplay.textContent = `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
-  }
+    if (timerLeft === 0) {
+      timeFinished()
+    }
+  } 
+}
+
+function timeFinished () {
+  finished()
 }
 
 function timerStop() {
   clearInterval(timerInterval);
-  // hacer que el botón funcione para seguir con el conteo
+  timeFinished()
 }
+
