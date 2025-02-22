@@ -63,6 +63,12 @@ h1 {
   color: #888;
 }
 
+.times {
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
 button {
   border-radius: 8px;
   border: 1px solid transparent;
